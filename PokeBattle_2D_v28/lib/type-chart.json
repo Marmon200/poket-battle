@@ -1,0 +1,146 @@
+{
+  "Normale": {
+    "Roccia": 0.5,
+    "Acciaio": 0.5,
+    "Spettro": 0
+  },
+  "Fuoco": {
+    "Fuoco": 0.5,
+    "Acqua": 0.5,
+    "Erba": 2,
+    "Ghiaccio": 2,
+    "Coleottero": 2,
+    "Roccia": 0.5,
+    "Drago": 0.5,
+    "Acciaio": 2
+  },
+  "Acqua": {
+    "Fuoco": 2,
+    "Acqua": 0.5,
+    "Erba": 0.5,
+    "Terra": 2,
+    "Roccia": 2,
+    "Drago": 0.5
+  },
+  "Elettro": {
+    "Acqua": 2,
+    "Elettro": 0.5,
+    "Erba": 0.5,
+    "Terra": 0,
+    "Volante": 2,
+    "Drago": 0.5
+  },
+  "Erba": {
+    "Fuoco": 0.5,
+    "Acqua": 2,
+    "Erba": 0.5,
+    "Veleno": 0.5,
+    "Terra": 2,
+    "Volante": 0.5,
+    "Coleottero": 0.5,
+    "Roccia": 2,
+    "Drago": 0.5,
+    "Acciaio": 0.5
+  },
+  "Ghiaccio": {
+    "Acqua": 0.5,
+    "Erba": 2,
+    "Ghiaccio": 0.5,
+    "Terra": 2,
+    "Volante": 2,
+    "Drago": 2,
+    "Acciaio": 0.5,
+    "Fuoco": 0.5
+  },
+  "Lotta": {
+    "Normale": 2,
+    "Ghiaccio": 2,
+    "Veleno": 0.5,
+    "Volante": 0.5,
+    "Psico": 0.5,
+    "Coleottero": 0.5,
+    "Roccia": 2,
+    "Buio": 2,
+    "Acciaio": 2,
+    "Spettro": 0
+  },
+  "Veleno": {
+    "Erba": 2,
+    "Veleno": 0.5,
+    "Terra": 0.5,
+    "Roccia": 0.5,
+    "Spettro": 0.5,
+    "Acciaio": 0
+  },
+  "Terra": {
+    "Fuoco": 2,
+    "Elettro": 2,
+    "Erba": 0.5,
+    "Veleno": 2,
+    "Volante": 0,
+    "Coleottero": 0.5,
+    "Roccia": 2,
+    "Acciaio": 2
+  },
+  "Volante": {
+    "Elettro": 0.5,
+    "Erba": 2,
+    "Lotta": 2,
+    "Coleottero": 2,
+    "Roccia": 0.5,
+    "Acciaio": 0.5
+  },
+  "Psico": {
+    "Lotta": 2,
+    "Veleno": 2,
+    "Psico": 0.5,
+    "Buio": 0,
+    "Acciaio": 0.5
+  },
+  "Coleottero": {
+    "Fuoco": 0.5,
+    "Erba": 2,
+    "Lotta": 0.5,
+    "Veleno": 0.5,
+    "Volante": 0.5,
+    "Psico": 2,
+    "Spettro": 0.5,
+    "Buio": 2,
+    "Acciaio": 0.5
+  },
+  "Roccia": {
+    "Fuoco": 2,
+    "Ghiaccio": 2,
+    "Lotta": 0.5,
+    "Terra": 0.5,
+    "Volante": 2,
+    "Coleottero": 2,
+    "Acciaio": 0.5
+  },
+  "Spettro": {
+    "Normale": 0,
+    "Psico": 2,
+    "Buio": 0.5,
+    "Acciaio": 0.5,
+    "Spettro": 2
+  },
+  "Drago": {
+    "Drago": 2,
+    "Acciaio": 0.5
+  },
+  "Buio": {
+    "Lotta": 0.5,
+    "Psico": 2,
+    "Spettro": 2,
+    "Buio": 0.5,
+    "Acciaio": 0.5
+  },
+  "Acciaio": {
+    "Fuoco": 0.5,
+    "Acqua": 0.5,
+    "Elettro": 0.5,
+    "Ghiaccio": 2,
+    "Roccia": 2,
+    "Acciaio": 0.5
+  }
+}
