@@ -1,10 +1,18 @@
 {
   "name": "poket-battle-cloudflare",
+  "version": "1.0.0",
   "private": true,
   "engines": {
     "node": ">=22.13.0"
   },
   "scripts": {
-    "build": "npm --prefix PokeBattle_2D_v28 install --no-audit --no-fund && npm --prefix PokeBattle_2D_v28 run build"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "16.3.4",
+    "react": "19.2.6",
+    "react-dom": "19.2.6"
   }
 }
