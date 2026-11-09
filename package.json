@@ -7,6 +7,7 @@
   },
   "scripts": {
     "dev": "next dev",
+    "prebuild": "node copy-game.mjs",
     "build": "next build",
     "start": "next start"
   },
