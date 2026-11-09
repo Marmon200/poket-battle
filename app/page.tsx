@@ -1,7 +1,7 @@
 export default function Page() {
   return (
     <iframe
-      src="/game/"
+      src="/game/index.html?v=2f15baa"
       title="PokéBattle 2D"
       allow="autoplay; fullscreen"
       style={{
