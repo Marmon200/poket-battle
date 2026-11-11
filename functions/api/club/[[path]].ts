@@ -1,4 +1,4 @@
-import { handle } from "../../../../PokeBattle_2D_v28/lib/server";
+import { handle } from "../../../PokeBattle_2D_v28/lib/server";
 
 type PagesContext = {
   request: Request;
