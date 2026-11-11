@@ -5,7 +5,8 @@ CREATE TABLE IF NOT EXISTS club_users (
   salt TEXT NOT NULL,
   state TEXT NOT NULL,
   version INTEGER NOT NULL DEFAULT 0,
-  created INTEGER NOT NULL
+  created INTEGER NOT NULL,
+  email_verified INTEGER NOT NULL DEFAULT 1
 );
 
 CREATE TABLE IF NOT EXISTS club_sessions (
