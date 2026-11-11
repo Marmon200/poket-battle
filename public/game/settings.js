@@ -1,4 +1,4 @@
-const SUPPORTED_LANGUAGES=['it','en','es','fr','de','pt-BR'];let uiLanguage=SUPPORTED_LANGUAGES.includes(localStorage.getItem('pokebattle_language'))?localStorage.getItem('pokebattle_language'):'it',prefsApplied=null;
+const SUPPORTED_LANGUAGES=['it','en','zh','ja','es','pt-BR','fr','de'];let uiLanguage=SUPPORTED_LANGUAGES.includes(localStorage.getItem('pokebattle_language'))?localStorage.getItem('pokebattle_language'):'it',prefsApplied=null;
 function getPreferences(){return {language:uiLanguage,musicVolume:battleMusic.volume,soundEffects:true,reducedMotion:false,...(account?.preferences||{})}}
 function applyPreferences(p){if(!p)return;if(SUPPORTED_LANGUAGES.includes(p.language))applyLanguage(p.language);if(Number.isFinite(p.musicVolume)){battleMusic.volume=Math.max(0,Math.min(.5,p.musicVolume));localStorage.setItem('club_volume',battleMusic.volume);$('volumeMusic').value=battleMusic.volume}document.body.classList.toggle('reduceMotion',!!p.reducedMotion);window.soundEffectsEnabled=p.soundEffects!==false}
 const saveBeforeSettings=saveAccount;saveAccount=function(a){saveBeforeSettings(a);applyPreferences(a.preferences)};
