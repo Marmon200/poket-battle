@@ -1,0 +1,10 @@
+name = "poket-battle"
+compatibility_date = "2026-11-11"
+pages_build_output_dir = "out"
+
+# Replace database_id with the ID of the D1 database created in Cloudflare.
+[[d1_databases]]
+binding = "DB"
+database_name = "poket-battle"
+database_id = "REPLACE_WITH_D1_DATABASE_ID"
+migrations_dir = "migrations"
