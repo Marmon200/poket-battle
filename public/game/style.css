@@ -3,3 +3,54 @@
 @media(max-width:760px){header{height:76px;padding:0 20px}.headernote{display:none}.brand{font-size:27px}main{padding:10px 15px 30px}.intro h1{font-size:35px}.intro p{font-size:12px}.star{font-size:25px;margin-left:7px}.setup{padding:20px 16px}.modebox{display:block}.modes{margin-top:16px}.mode{min-width:0;flex:1;padding:8px 13px}.mode small{font-size:8px}.pickhead h2{font-size:18px}.pickhead>span{font-size:9px}.roster{grid-template-columns:repeat(2,1fr);gap:12px}.pick{min-height:160px}.pick img{height:100px}.launch{flex-direction:column;align-items:stretch}.launch .primary{width:100%}.lobbyfoot{flex-wrap:wrap;gap:9px 18px;font-size:9px}.battlelayout{display:block}.phone{max-width:480px;margin:auto}.battlelayout aside{max-width:480px;margin:17px auto;display:grid;grid-template-columns:100px 1fr;gap:12px}.battlelayout .infoPanel{padding:11px;margin:0;box-shadow:0 3px 0 var(--ink)}.battlelayout .infoPanel:first-child{grid-column:1/-1;display:flex;align-items:center;gap:8px}.battlelayout .infoPanel:first-child>.eyebrow,.battlelayout #activeAbility{display:none}.battlelayout #activeName{font-size:18px;margin:0;flex:1}.party{margin:0;gap:5px}.party button{width:48px}.party img{height:38px}.battlelayout .infoPanel:nth-child(2){grid-column:2;grid-row:2}.moves{grid-template-columns:1fr 1fr;gap:6px}.paneltitle{margin-bottom:8px}.move{padding:7px 5px;gap:6px;min-height:62px}.move strong{font-size:9px}.move small{font-size:7px}.move kbd{width:19px;height:21px;font-size:10px;flex-shrink:0}.move .cdtext{position:absolute;top:1px;right:3px;font-size:7px}.controlPanel{grid-column:1;grid-row:2;margin:0;justify-content:center}.controlPanel>div:last-child{display:none}.battlelog{grid-column:1/-1;margin:0;min-height:38px}.note{display:none}.battleheading h2{font-size:21px}.battleheading .eyebrow{font-size:7px}.battleheading .smallbtn{font-size:10px;padding:7px 9px}.battleheading{margin-bottom:15px}.arenaHUD{padding:8px 10px}.hudname{font-size:14px}.hudline{font-size:8px}.movename{font-size:11px;padding:5px 8px}.battletime{font-size:10px}#result{padding-top:40px}}
 
 @media(max-width:760px){.inbattle header{height:50px}.inbattle footer{display:none}.inbattle main{padding:5px 12px 8px}.inbattle .battleheading{height:42px;margin-bottom:9px}.inbattle .battleheading h2{font-size:18px}.inbattle .phone{width:min(100%,calc((100svh - 300px)*.625));min-width:230px}.inbattle .battlelayout aside{margin:10px auto 0;gap:7px}.inbattle .infoPanel:first-child{padding:4px 10px;border-radius:12px;min-height:38px}.inbattle .party img{height:28px}.inbattle .party button{width:38px;border-radius:8px}.inbattle .infoPanel:nth-child(2){padding:7px}.inbattle .paneltitle{margin-bottom:5px}.inbattle .paneltitle h3{font-size:10px}.inbattle .move{min-height:48px;padding:5px}.inbattle .move strong{font-size:9px}.inbattle .move small{font-size:6px}.inbattle .battlelog{min-height:25px;padding:6px 9px;font-size:9px}.inbattle .hudname{font-size:11px}.inbattle .arenaHUD{padding:6px 8px}.inbattle .hudline{font-size:7px}.inbattle .balls{font-size:8px;margin-top:1px}.inbattle .battletime{top:7px;font-size:8px}.inbattle .movename{font-size:9px;padding:4px 7px}}
+
+/* Stable viewport geometry for the 960x600 arena and narrow club screens. */
+html,body{width:100%;max-width:100%;overflow-x:hidden}
+canvas#game{aspect-ratio:16/10;width:100%;height:auto;max-width:960px}
+body.inbattle{height:100dvh;min-height:100dvh;overflow:hidden;touch-action:none}
+body.inbattle main{height:calc(100dvh - 65px);min-height:0;overflow:hidden}
+body.inbattle #battle{height:100%;min-height:0}
+body.inbattle .battlelayout{min-height:0}
+body.inbattle .phone{max-width:min(960px,100%);width:100%}
+body.inbattle .canvaswrap{overflow:hidden}
+body.inbattle .controlPanel{touch-action:none}
+@media (min-width:761px){
+  body:not(.inbattle) main{min-height:calc(100dvh - 150px)}
+  body.inbattle .battlelayout{grid-template-columns:minmax(0,960px) 290px;max-width:1280px}
+  body.inbattle .phone{width:min(960px,calc(100vw - 340px))}
+}
+@media (max-width:760px) and (orientation:portrait){
+  body:not(.inbattle) main{padding-left:12px;padding-right:12px}
+  #portal{width:100%;min-width:0}
+  #clubNav{overflow:hidden}
+  #clubNav button{min-width:0;flex:1;padding-left:4px;padding-right:4px}
+  .pagehead,.rewardstrip,.searchrow,.detailhero{min-width:0}
+  .pagehead h1,.welcome h1,.clubcard h2,.clubcard h3{overflow-wrap:anywhere}
+  .tabs{overflow-x:auto;max-width:100%;padding-bottom:2px}
+  .tabs button{flex:0 0 auto}
+  .boxgrid,.inventoryGrid,.shopgrid,.dashboard,.battleChoices{min-width:0}
+  .moncard,.clubcard{min-width:0;overflow:hidden}
+  .moncard strong,.moncard small{overflow-wrap:anywhere}
+}
+@media (max-width:760px) and (orientation:landscape){
+  body.inbattle{background:#172337}
+  body.inbattle header{display:none}
+  body.inbattle main{height:100dvh;padding:0;overflow:hidden}
+  body.inbattle .battleheading{display:none}
+  body.inbattle .battlelayout{height:100dvh;display:block;position:relative}
+  body.inbattle .battlelayout .phone{position:absolute;inset:0;width:100%;max-width:none;border:0;border-radius:0;box-shadow:none}
+  body.inbattle .arenaHUD{height:clamp(38px,10dvh,58px);padding:4px 10px}
+  body.inbattle .canvaswrap{height:calc(100dvh - clamp(38px,10dvh,58px))}
+  body.inbattle canvas#game{width:100%;height:100%;max-width:none;object-fit:contain}
+  body.inbattle .battlelayout aside{position:absolute;inset:0;display:block;max-width:none;margin:0;pointer-events:none}
+  body.inbattle .battlelayout .infoPanel,.inbattle .battlelog,.inbattle .note{display:none}
+  body.inbattle .battlelayout .moves{position:absolute;right:10px;bottom:10px;width:min(42vw,300px);display:grid;grid-template-columns:1fr 1fr;gap:8px;pointer-events:auto}
+  body.inbattle .battlelayout .move{min-height:clamp(42px,12dvh,66px);padding:6px;backdrop-filter:blur(4px)}
+  body.inbattle .battlelayout .controlPanel{position:absolute;left:10px;bottom:10px;margin:0;pointer-events:auto}
+  body.inbattle .battlelayout .pad{width:clamp(76px,20dvh,112px);height:clamp(76px,20dvh,112px)}
+  body.inbattle .battlelayout .pad i{left:calc(50% - 18px);top:calc(50% - 18px)}
+  body.inbattle .battleTools{position:absolute;right:10px;bottom:calc(clamp(42px,12dvh,66px)*2 + 26px);width:min(42vw,300px);pointer-events:auto}
+  body.inbattle .battleTools #battleItems{display:flex;gap:6px}
+  body.inbattle .battleTools #battleItems button{min-width:0;flex:1;padding:5px;font-size:9px}
+  body.inbattle .battleTools .paneltitle,body.inbattle #buffStatus{display:none}
+}
