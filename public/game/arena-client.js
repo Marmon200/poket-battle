@@ -5,12 +5,26 @@ function displayedWorld(){return window.netBattle&&window.onlineWorld?window.onl
 window.worldTime=()=>window.netBattle?time+Math.min(.2,(Date.now()-(window.worldSyncedAt||Date.now()))/1000):time;
 window.moveWorldActor=(pos,x,y)=>{let st=offlineWorld();if(st)arenaMove(st,pos===player?0:1,x,y)};
 window.psychicCast=(own,move)=>{let st=offlineWorld();if(st)arenaPsychic(st,own?0:1,move)};
-const beforeWorldLaunch=launch;launch=function(){const f=()=>{document.getElementById('battleIntro')?.remove();document.body.classList.remove('introducing');const l=document.getElementById('lobby');if(l){l.hidden=true;l.style.display='none'}const p=document.getElementById('portal');if(p){p.hidden=true;p.style.display='none'}const b=document.getElementById('battle');if(b){b.hidden=false;b.style.display=''}const g=document.getElementById('game');if(g){g.hidden=false;g.style.visibility='visible';g.style.opacity='1';g.style.pointerEvents='auto';g.focus()}};f();setTimeout(f,1500);setTimeout(f,3500);localWorld=null;window.onlineWorld=null;beforeWorldLaunch();if(screen==='battle'){let st=offlineWorld();for(let side of [0,1]){let safe=arenaSafe(st,side,st.pos[side].x,st.pos[side].y);Object.assign(st.pos[side],safe)}updateBattleItems()}};$('launch').onclick=()=>launch();
-const battlePresentation=window.battlePresentation;
-const originalBattleLaunch=launch;
-launch=function(){const portal=document.getElementById('portal');if(battlePresentation)battlePresentation.returnTarget=portal?.hidden===false?'portal':'lobby';originalBattleLaunch()};
-const backButton=document.getElementById('back');
-if(backButton)backButton.onclick=()=>{const target=battlePresentation?.returnTarget||'lobby';battlePresentation?.cancel();show('lobby');const lobby=document.getElementById('lobby'),portal=document.getElementById('portal'),battle=document.getElementById('battle');if(battle){battle.hidden=true;battle.style.display='none'}if(target==='portal'&&portal){lobby.hidden=true;lobby.style.display='none';portal.hidden=false}else if(lobby){lobby.hidden=false;lobby.style.display=''}document.getElementById('game')?.focus()};
+const beforeWorldLaunch=launch;
+launch=function(){
+    localWorld=null;
+    window.onlineWorld=null;
+    beforeWorldLaunch();
+    if(screen==='battle'){
+        let st=offlineWorld();
+        for(let side of [0,1]){
+            let safe=arenaSafe(st,side,st.pos[side].x,st.pos[side].y);
+            Object.assign(st.pos[side],safe)
+        }
+        updateBattleItems();
+    }
+    setTimeout(() => {
+        document.getElementById('battleIntro')?.remove();
+        document.body.classList.remove('introducing');
+        document.getElementById('game')?.focus();
+    }, 3500);
+};
+$('launch').onclick=()=>launch();
 const beforeWorldDamage=damage;damage=function(own,move,x,y,scale=1){let st=offlineWorld();if(st){scale*=arenaDamage(st,own?0:1);if(!move.dot&&!move.status)arenaImpact(st,x,y,move)}beforeWorldDamage(own,move,x,y,scale);if(st&&!ko){let side=own?1:0,safe=arenaSafe(st,side,st.pos[side].x,st.pos[side].y);Object.assign(st.pos[side],safe)}};
 const beforeWorldUpdate=update;update=function(dt){beforeWorldUpdate(dt);if(screen!=='battle'||paused||window.battlePresentation?.active)return;if(!window.netBattle&&!ko){let st=offlineWorld();arenaEffectsTick(st,dt,(side,move)=>damage(side===0,move,st.pos[1-side].x,st.pos[1-side].y,move.hitScale||1));arenaTick(st,dt,(side,move)=>damage(side===0,move,st.pos[1-side].x,st.pos[1-side].y,move.hitScale||1));for(let b of beams){let length=Math.min(b.len,b.age*1100);for(let d=0;d<=length;d+=15){if(arenaProjectile(st,{x:b.ox+Math.cos(b.a)*d,y:b.oy+Math.sin(b.a)*d,r:10,m:b.m,ox:b.ox,oy:b.oy})){b.life=0;break}}}for(let s of shots)if(s.life>0&&arenaProjectile(st,s))s.life=0;for(let e of st.events)window.worldEvent(e);st.events=[]}updateBattleItems()};
 window.worldEvent=e=>{if(e.kind==='pickup'){log((e.side===(window.netBattle?room.side:0)?'Il tuo Pokémon':'L’avversario')+' raccoglie '+({speed:'SPEED · 6 s',attack:'ATTACCO ×2 · 8 s',defense:'DIFESA ×2 · 8 s'}[e.item]||e.item));burst(e.x,e.y-25,boostColor[e.item],25)}else if(e.kind==='icebreak'){impact(e.x,e.y,'Ghiaccio',52);log('Il ghiaccio si è spezzato!')}else if(e.kind==='psychic'){burst(e.x,e.y-30,'#e6b4ff',25);log('Presa psichica! Sollevamento e lancio…')}};
