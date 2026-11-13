@@ -18,13 +18,19 @@ launch=function(){
         }
         updateBattleItems();
     }
-    setTimeout(() => {
-        document.getElementById('battleIntro')?.remove();
-        document.body.classList.remove('introducing');
-        document.getElementById('game')?.focus();
-    }, 3500);
+    document.getElementById('battleIntro')?.remove();
+    document.body.classList.remove('introducing');
+    const lobby=document.getElementById('lobby');
+    const portal=document.getElementById('portal');
+    if(lobby){lobby.hidden=true;lobby.style.display='none'}
+    if(portal){portal.hidden=true;portal.style.display='none'}
+    const battle=document.getElementById('battle');
+    if(battle){battle.hidden=false;battle.style.display=''}
+    document.getElementById('game')?.focus();
 };
 $('launch').onclick=()=>launch();
+const backButton=document.getElementById('back');
+if(backButton)backButton.onclick=()=>{const battle=document.getElementById('battle'),lobby=document.getElementById('lobby');if(battle){battle.hidden=true;battle.style.display='none'}if(lobby){lobby.hidden=false;lobby.style.display=''}};
 const beforeWorldDamage=damage;damage=function(own,move,x,y,scale=1){let st=offlineWorld();if(st){scale*=arenaDamage(st,own?0:1);if(!move.dot&&!move.status)arenaImpact(st,x,y,move)}beforeWorldDamage(own,move,x,y,scale);if(st&&!ko){let side=own?1:0,safe=arenaSafe(st,side,st.pos[side].x,st.pos[side].y);Object.assign(st.pos[side],safe)}};
 const beforeWorldUpdate=update;update=function(dt){beforeWorldUpdate(dt);if(screen!=='battle'||paused||window.battlePresentation?.active)return;if(!window.netBattle&&!ko){let st=offlineWorld();arenaEffectsTick(st,dt,(side,move)=>damage(side===0,move,st.pos[1-side].x,st.pos[1-side].y,move.hitScale||1));arenaTick(st,dt,(side,move)=>damage(side===0,move,st.pos[1-side].x,st.pos[1-side].y,move.hitScale||1));for(let b of beams){let length=Math.min(b.len,b.age*1100);for(let d=0;d<=length;d+=15){if(arenaProjectile(st,{x:b.ox+Math.cos(b.a)*d,y:b.oy+Math.sin(b.a)*d,r:10,m:b.m,ox:b.ox,oy:b.oy})){b.life=0;break}}}for(let s of shots)if(s.life>0&&arenaProjectile(st,s))s.life=0;for(let e of st.events)window.worldEvent(e);st.events=[]}updateBattleItems()};
 window.worldEvent=e=>{if(e.kind==='pickup'){log((e.side===(window.netBattle?room.side:0)?'Il tuo Pokémon':'L’avversario')+' raccoglie '+({speed:'SPEED · 6 s',attack:'ATTACCO ×2 · 8 s',defense:'DIFESA ×2 · 8 s'}[e.item]||e.item));burst(e.x,e.y-25,boostColor[e.item],25)}else if(e.kind==='icebreak'){impact(e.x,e.y,'Ghiaccio',52);log('Il ghiaccio si è spezzato!')}else if(e.kind==='psychic'){burst(e.x,e.y-30,'#e6b4ff',25);log('Presa psichica! Sollevamento e lancio…')}};
