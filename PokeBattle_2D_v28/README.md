@@ -59,6 +59,7 @@ Test aggiuntivo: `node tests/profile.mjs`.
 
 - Campo 960×600 e interfaccia smartphone in orizzontale, avviso di rotazione e pulsante schermo intero (il blocco orientamento dipende dal browser).
 - Ricerca casuale `match-find`: abbinamento mediante assegnazione atomica del secondo giocatore; dopo 8 secondi senza un avversario passa a una vera simulazione CPU sul server. La CPU è indicata nel nome. Nessuna migrazione D1 necessaria. Le stanze della versione precedente vanno ricreate.
+- Il pulsante `Lotta Online` avvia direttamente la ricerca: dopo 8 secondi senza avversari il server converte la ricerca in una sfida CPU con esperienza.
 - Vittorie nelle sfide online/private e CPU con progressi: 10 monete, sconfitte 0. XP ai Pokémon entrati in campo e 25% alla panchina, anche nel fallback CPU. Demo e pratica offline continuano a non assegnare premi o esperienza.
 - Tre lanci per parte: Speed (×1.65 per 6s), Attacco (×2 per 8s), Difesa (danni subiti dimezzati per 8s). Gli oggetti sono condivisi sul campo e raccoglibili dall’avversario; ne compaiono altri periodicamente. Si azzerano a ogni battaglia e non consumano l’inventario persistente.
 - Piscina: piattaforme trasportano i Pokémon, blocchi di ghiaccio subiscono danni e si rompono, solo tipi Acqua attraversano l’acqua. Il recupero alla superficie sicura più vicina evita blocchi dopo la rottura del ghiaccio o un cambio Pokémon.
@@ -74,6 +75,7 @@ Test aggiuntivo: `node tests/profile.mjs`.
 - Borse: 2 o 3 oggetti ogni 12 ore, con potenziamenti e uova nel pool insieme a pietre/MT/biglietti. Nessuna dotazione gratuita di potenziamenti nelle arene e nessuna comparsa automatica.
 - Un lancio nelle sfide online/CPU con progressi consuma un oggetto persistente. Profilo e stanza sono aggiornati in una transazione, con versioni controllate e ID richiesta per evitare doppio consumo. In demo/pratica offline gli oggetti persistenti restano disattivati.
 - Una singola incubatrice indipendente dall’allenamento. L’avvio consuma un uovo; dopo 12 ore di tempo server lo stato aggiunge un Pokémon base al livello 6, una sola volta, anche dopo una disconnessione. La pagina Uova e incubatrice è nel Box.
+- Il Profilo include toggle per Musica e Vibrazione e una selezione Lingua; il Box consente di riordinare la squadra. Al termine delle lotte viene mostrato il riepilogo XP per Pokémon.
 - Test: `node tests/backend.mjs`, `node tests/loadout.mjs`, più gli altri test esistenti. Nessuna migrazione D1; i vecchi stati account sono compatibili. Le stanze della versione precedente vanno ricreate.
 
 ## Versione 11 — PokéBattle 2D
