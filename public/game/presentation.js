@@ -90,6 +90,14 @@ window.battlePresentation = {
     $('resultEyebrow').textContent = win ? 'VITTORIA!' : 'SFIDA COMPLETATA';
     $('resultTitle').textContent = !st && winner === 0 && trainer.name === 'Tu' ? 'Hai vinto!' : trainer.name + ' vince!';
     $('resultCopy').textContent = 'Tempo di battaglia: ' + fmt(duration) + '.';
+    document.getElementById('xpAwards')?.remove();
+    if (st?.xpAwards?.length) {
+      const awards = document.createElement('div');
+      awards.id = 'xpAwards';
+      awards.className = 'xpAwards';
+      awards.innerHTML = `<strong>Esperienza guadagnata</strong>${st.xpAwards.map(a => `<span>${esc(a.name)} <b>+${a.xp} XP</b>${a.level > a.beforeLevel ? ` · Livello ${a.level}` : ''}</span>`).join('')}`;
+      $('resultCopy').after(awards);
+    }
     document.getElementById('victoryPodium')?.remove();
     const el = document.createElement('div');
     el.id = 'victoryPodium';
