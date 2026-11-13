@@ -1,0 +1,1 @@
+{"name": "PokéBattle 2D", "short_name": "PokéBattle 2D", "start_url": "/", "display": "standalone", "background_color": "#edf7ff", "theme_color": "#edf7ff", "icons": [{"src": "/icon.svg", "sizes": "any", "type": "image/svg+xml"}]}

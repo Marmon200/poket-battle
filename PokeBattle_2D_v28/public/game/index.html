@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#eaf6ff">
+  <title>PokéBattle 2D — Battle!</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="club.css">
+  <link rel="stylesheet" href="team-battle.css">
+  <link rel="stylesheet" href="progression-upgrade.css">
+  <link rel="stylesheet" href="pokedex.css">
+  <link rel="stylesheet" href="move-choreography.css">
+</head>
+<body class="atTitle">
+  <section id="titleScreen" aria-label="Schermata iniziale">
+    <canvas id="titleLandscape" aria-hidden="true"></canvas>
+    <div class="titleCenter">
+      <span class="titleEyebrow">LA TUA AVVENTURA COMINCIA QUI</span>
+      <h1>PokéBattle <span>2D</span></h1>
+      <p>Un sentiero. Centocinquantuno compagni. La tua storia.</p>
+      <button id="titlePlay" type="button" disabled>GIOCA</button>
+      <button id="titleDemo" type="button">Prova la demo</button>
+    </div>
+    <small class="titleCredit">Fan game non ufficiale · Pokémon © Nintendo / Game Freak / Creatures</small>
+  </section>
+
+  <header>
+    <a class="brand" href="#" id="homeBrand"><span class="pokeball"></span>PokéBattle<span class="club">2D</span></a>
+    <span class="headernote" id="userHeader">La tua squadra. La tua sfida.</span>
+    <button class="smallbtn" id="helpBtn">Come si gioca?</button>
+  </header>
+  <nav id="clubNav">
+    <button data-page="home">🏠 <span>Home</span></button>
+    <button data-page="fight">🥊 <span>Lotta</span></button>
+    <button data-page="box">📦 <span>Box</span></button>
+    <button data-page="shop">🛍️ <span>Negozio</span></button>
+    <button data-page="profile">🧑 <span>Profilo</span></button>
+  </nav>
+
+  <main>
+    <section id="portal"></section>
+    <section id="lobby">
+      <div class="intro">
+        <span class="eyebrow">DEMO LIBERA · NESSUNA ESPERIENZA</span>
+        <h1>151 modi di fare <em>scintille.</em><span class="star">✦</span></h1>
+        <p>Prova tutti i Pokémon di Kanto contro il computer, senza modificare il tuo account.</p>
+      </div>
+      <div class="setup">
+        <div class="modebox">
+          <div><span class="step">1</span><h2>Scegli la sfida</h2></div>
+          <div class="modes">
+            <button class="mode active" data-mode="1"><b>1 <span>vs</span> 1</b><small>Un Pokémon. Tutto da dare.</small></button>
+            <button class="mode" data-mode="3"><b>3 <span>vs</span> 3</b><small>Tre compagni. Una squadra.</small></button>
+            <button class="mode" data-mode="6"><b>6 <span>vs</span> 6</b><small>Una squadra completa.</small></button>
+          </div>
+        </div>
+        <div class="pickhead"><div><span class="step blue">2</span><h2>Chi porti in campo?</h2></div><span id="pickCount">1 / 1 selezionato</span></div>
+        <div class="demoFilters"><input id="demoSearch" placeholder="Cerca fra i 151 Pokémon…" aria-label="Cerca Pokémon demo"><select id="demoType" aria-label="Tipo Pokémon"><option value="">Tutti i tipi</option></select></div>
+        <div class="roster" id="roster"></div>
+        <div class="launch"><div><div class="eyebrow">LA TUA SQUADRA</div><div id="selectedNames">Blastoise</div><small>Livello 38 · CPU · Nessuna esperienza o ricompensa</small></div><button class="primary" id="launch">Scendi in campo <span>→</span></button></div>
+      </div>
+      <div class="lobbyfoot"><span>✦ Schiva in tempo reale</span><span>✦ Attacchi che si scontrano</span><span>✦ Un campo che cambia con la lotta</span></div>
+    </section>
+
+    <section id="battle" hidden>
+      <div class="battleheading"><button class="smallbtn" id="back">← Squadra</button><div><span class="eyebrow">PALESTRA SMERALDO</span><h2>Fai la tua mossa!</h2></div><button class="smallbtn" id="pauseBtn">Ⅱ Pausa</button></div>
+      <div class="battlelayout">
+        <div class="phone">
+          <div class="arenaHUD"><div id="playerHUD"></div><span class="versus">VS</span><div id="enemyHUD"></div></div>
+          <div class="canvaswrap"><canvas id="game" width="960" height="600" tabindex="0" aria-label="Arena Pokémon orizzontale"></canvas><div id="pauseCover" hidden><h2>Prendi fiato.</h2><button class="primary" id="resume">Riprendi →</button></div><div class="battletime" id="timer">0:00</div><div class="movename left" id="ownMove"></div><div class="movename right" id="foeMove"></div></div>
+        </div>
+        <aside>
+          <div class="infoPanel"><span class="eyebrow">IL TUO POKÉMON</span><h2 id="activeName">Blastoise</h2><p id="activeAbility"></p><div class="party" id="party"></div></div>
+          <div class="infoPanel"><div class="paneltitle"><h3>Le tue mosse</h3><span>W A S D</span></div><div id="moves" class="moves"></div></div>
+          <div class="controlPanel"><div class="pad" id="pad"><i></i><span>↑<br>← &nbsp; →<br>↓</span></div><div><b>Muovi e schiva</b><p>Frecce o joystick<br>1–6 cambia Pokémon · P pausa</p></div></div>
+          <div class="battlelog" id="log">La sfida comincia!</div>
+          <p class="note">Acqua contro fuoco? Si alza il vapore.<br>Gli impatti spaccano il campo e lasciano il segno.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section id="result" hidden><span class="resultstar">✦</span><span class="eyebrow" id="resultEyebrow">MEDAGLIA CONQUISTATA</span><h1 id="resultTitle">La palestra è tua!</h1><p id="resultCopy"></p><button class="primary" id="rematch">Rivincita →</button><button class="smallbtn" id="chooseAgain">Cambia squadra</button></section>
+  </main>
+  <div id="rotateHint"><span>↻</span><h2>Attivo lo schermo orizzontale</h2><p>Il browser può ruotare automaticamente il telefono dopo un tocco.</p><button class="primary" id="rotateNow" type="button">Ruota automaticamente</button><button class="smallbtn" onclick="page('fight')">Torna alle sfide</button></div>
+  <footer>Fan game non ufficiale · Pokémon © Nintendo / Game Freak / Creatures · Sprite PMDCollab · Versione 28 · Prima edizione online</footer>
+  <dialog id="detail"></dialog><div id="toast" role="status"></div>
+  <dialog id="help"><button class="dialogclose" id="closeHelp">×</button><span class="eyebrow">DUE DRITTE PRIMA DELLA SFIDA</span><h2>Muoviti. Mira. Attacca!</h2><p><b>Frecce</b> per muoverti, <b>W A S D</b> per usare le quattro mosse. Da telefono trascina il joystick e tocca le mosse.</p><button class="primary" id="helpReady">Ci sono!</button></dialog>
+
+  <script src="mobile-controls.js"></script><script src="story-data.js"></script><script src="data.js"></script><script src="equipment-data.js"></script><script src="arena-world.js"></script><script src="battle-visuals.js"></script><script src="effects.js"></script><script src="game.js"></script><script src="pokemon-size.js"></script><script src="air-animations.js"></script><script src="creature-renderer.js"></script><script src="machines.js"></script><script src="movement.js"></script><script src="club.js"></script><script src="stadiums.js"></script><script src="stadium-art.js"></script><script src="trainer.js"></script><script src="presentation.js"></script><script src="arena-client.js"></script><script src="inventory-ui.js"></script><script src="shop-controls.js"></script><script src="combat-input.js"></script><script src="adventure.js"></script><script src="i18n-data.js"></script><script src="settings.js"></script><script src="cinematic-battle.js"></script><script src="interactive-arena.js"></script><script src="battle-upgrade.js"></script><script src="equipment-ui.js"></script><script src="cartoon-effects.js"></script><script src="continuous-effects.js"></script><script src="demo-loadout.js"></script><script src="demo-rooms.js"></script><script src="battle-details.js"></script><script src="final-controls.js"></script><script src="title-screen.js"></script><script src="team-battle.js"></script><script src="progression-upgrade.js"></script><script src="move-reference.js"></script><script src="pokedex.js"></script><script src="move-choreography.js"></script><script src="auth-recovery.js"></script><script src="features.js"></script>
+</body>
+</html>
