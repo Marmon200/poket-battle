@@ -6,6 +6,25 @@ window.battlePresentation = {
   counter: null,
   raf: 0,
   safetyTimer: 0,
+  returnTarget: 'lobby',
+  activateBattleDom() {
+    const intro = document.getElementById('battleIntro');
+    if (intro) intro.remove();
+    document.body.classList.remove('introducing');
+    const lobby = document.getElementById('lobby');
+    if (lobby) {
+      lobby.hidden = true;
+      lobby.style.display = 'none';
+    }
+    const portal = document.getElementById('portal');
+    if (portal) portal.hidden = true;
+    const battle = document.getElementById('battle');
+    if (battle) {
+      battle.hidden = false;
+      battle.style.display = '';
+    }
+    document.getElementById('game')?.focus();
+  },
   cancel() {
     this.active = false;
     cancelAnimationFrame(this.raf);
@@ -21,13 +40,15 @@ window.battlePresentation = {
   },
   finish() {
     if (!this.active) return false;
+    this.activateBattleDom();
     this.cancel();
-    cv?.focus();
+    document.getElementById('game')?.focus();
     log('VIA! La battaglia comincia.');
     return false;
   },
   begin(st = null, side = 0) {
     this.cancel();
+    this.returnTarget = document.getElementById('portal')?.hidden === false ? 'portal' : 'lobby';
     const cpu = { photo: null, cpu: true };
     this.trainers = st
       ? [0, 1].map(i => ({ name: st.names[i], avatar: normAvatar(st.avatars?.[i]) }))
