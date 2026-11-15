@@ -1,0 +1,21 @@
+{
+  "routes": [
+    {
+      "routePath": "/api/club/:path*",
+      "mountPath": "/api/club",
+      "method": "GET",
+      "module": [
+        "api/club/[[path]].ts:onRequestGet"
+      ]
+    },
+    {
+      "routePath": "/api/club/:path*",
+      "mountPath": "/api/club",
+      "method": "POST",
+      "module": [
+        "api/club/[[path]].ts:onRequestPost"
+      ]
+    }
+  ],
+  "baseURL": "/"
+}
