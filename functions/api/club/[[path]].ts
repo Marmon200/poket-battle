@@ -18,10 +18,14 @@ type PagesContext = {
   };
 };
 
+function runtimeEnv(env: PagesContext['env']) {
+  return env?.env && typeof env.env === 'object' ? env.env : env;
+}
+
 export async function onRequestGet({ request, env }: PagesContext) {
-  return handle(request, env);
+  return handle(request, runtimeEnv(env));
 }
 
 export async function onRequestPost({ request, env }: PagesContext) {
-  return handle(request, env);
+  return handle(request, runtimeEnv(env));
 }
