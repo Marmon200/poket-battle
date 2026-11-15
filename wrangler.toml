@@ -1,0 +1,15 @@
+name = "poket-battle"
+compatibility_date = "2026-11-11"
+pages_build_output_dir = "out"
+
+# Replace database_id with the ID of the D1 database created in Cloudflare.
+[[d1_databases]]
+binding = "DB"
+database_name = "poket-battle-test"
+database_id = "786eede7-5a30-427e-b346-1c5f0d49ec19"
+migrations_dir = "migrations"
+
+# Configure secrets in Cloudflare Pages > Settings > Variables and Secrets:
+# BREVO_API_KEY, AUTH_FROM_EMAIL, AUTH_CODE_PEPPER (existing email verification)
+# ADMIN_EMAILS = comma-separated, verified administrator email addresses.
+# Never put admin privileges in the browser, user profile or localStorage.
