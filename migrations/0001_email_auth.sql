@@ -1,4 +1,4 @@
-ALTER TABLE club_users ADD COLUMN email_verified INTEGER NOT NULL DEFAULT 1;
+-- email_verified is defined by the baseline. scripts/migrate.mjs upgrades older schemas safely.
 
 CREATE TABLE IF NOT EXISTS club_auth_codes (
   id TEXT PRIMARY KEY NOT NULL,

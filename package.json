@@ -9,7 +9,11 @@
     "dev": "next dev",
     "prebuild": "node copy-game.mjs",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "test": "node --import tsx --test --test-force-exit tests/*.test.*",
+    "check:backend": "tsc --project tsconfig.backend.json",
+    "check:assets": "node tests/check-assets.mjs",
+    "db:migrate": "node scripts/migrate.mjs"
   },
   "dependencies": {
     "next": "16.3.4",
@@ -20,6 +24,9 @@
     "@types/node": "22.19.19",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
+    "esbuild": "^0.28.2",
+    "jsdom": "^31.0.1",
+    "tsx": "^4.23.15",
     "typescript": "5.9.3"
   }
 }

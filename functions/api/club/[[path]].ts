@@ -7,6 +7,7 @@ type PagesContext = {
     BREVO_API_KEY?: string;
     AUTH_FROM_EMAIL?: string;
     AUTH_CODE_PEPPER?: string;
+    ADMIN_EMAILS?: string;
   };
 };
 

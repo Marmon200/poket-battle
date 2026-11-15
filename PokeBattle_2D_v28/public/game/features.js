@@ -2,45 +2,9 @@
   const featurePages = new Set(['events', 'pass']);
   const featureNames = { events: 'Eventi', pass: 'Battle Pass' };
   const languageOptions = [
-    ['it', 'Italiano'], ['en', 'English'], ['zh', '中文'],
-    ['ja', '日本語'], ['es', 'Español'], ['pt-BR', 'Português']
+    ['it', 'Italiano'], ['en', 'English'],
+    ['fr', 'Français'], ['es', 'Español'], ['pt-BR', 'Português'], ['de','Deutsch']
   ];
-
-  function featurePage(name) {
-    const wins = account?.wins || 0;
-    const battles = account?.battles || 0;
-    if (name === 'events') {
-      portal.innerHTML = `${head('Eventi', 'Sfide attive e ricompense del Club.')}<div class="featureGrid">
-        <section class="clubcard"><span class="eyebrow">EVENTO SETTIMANALE</span><h2>Vittorie in palestra</h2><p>Vinci ${Math.min(5, wins)}/5 lotte online per ricevere il premio evento.</p><div class="xpbar"><i style="width:${Math.min(100, wins / 5 * 100)}%"></i></div><strong>${wins >= 5 ? 'Completato · +100 P-coin' : 'Ricompensa: 100 P-coin'}</strong></section>
-        <section class="clubcard"><span class="eyebrow">MISSIONE GIORNALIERA</span><h2>Scendi in campo</h2><p>Completa una lotta oggi. Progressi registrati automaticamente.</p><div class="xpbar"><i style="width:${battles ? 100 : 0}%"></i></div><strong>${battles ? 'Completata' : 'In attesa della prossima lotta'}</strong></section>
-      </div><button class="smallbtn" onclick="page('home')">← Torna alla Home</button>`;
-    } else {
-      const level = Math.min(20, Math.floor(wins / 2));
-      const progress = (wins % 2) * 50;
-      featurePageMarkup(name, level, progress);
-    }
-    localizeTree(portal);
-  }
-
-  function featurePageMarkup(name, level, progress) {
-    portal.innerHTML = `${head('Battle Pass', 'Un percorso gratuito basato sulle tue vittorie online.')}<section class="passHero clubcard"><span class="eyebrow">STAGIONE KANTO · GRATUITA</span><h2>Livello ${level}/20</h2><div class="xpbar"><i style="width:${progress}%"></i></div><p>Ogni due vittorie sblocchi una ricompensa. Vittorie registrate: ${account?.wins || 0}.</p><div class="passRewards">${Array.from({ length: 5 }, (_, i) => { const n = level + i + 1; return `<div class="${n <= level ? 'earned' : ''}"><b>${n <= level ? '✓' : n}</b><span>${n % 5 === 0 ? '100 P-coin' : 'Ricompensa Club'}</span></div>`; }).join('')}</div></section><button class="smallbtn" onclick="page('home')">← Torna alla Home</button>`;
-  }
-
-  const basePage = page;
-  page = function (name) {
-    if (!featurePages.has(name)) return basePage(name);
-    window.cancelQuickMatch?.();
-    currentPage = name;
-    show('portal');
-    portal.hidden = false;
-    document.querySelectorAll('#clubNav button').forEach(b => b.classList.remove('active'));
-    featurePage(name);
-  };
-  const baseRenderPage = renderPage;
-  renderPage = function () {
-    if (featurePages.has(currentPage)) return featurePage(currentPage);
-    return baseRenderPage();
-  };
 
   const baseHome = renderHome;
   renderHome = function () {
@@ -88,7 +52,7 @@
     if (boxTab === 'items') document.querySelectorAll('.inventoryGrid .clubcard').forEach(card => {
       const title = card.querySelector('h3')?.textContent?.trim();
       const item = typeof EQUIPMENT !== 'undefined' ? EQUIPMENT.find(i => i.name === title || itemName(i.name) === title) : null;
-      if (item && !card.querySelector('.itemEffect')) card.insertAdjacentHTML('beforeend', `<p class="itemEffect"><b>Effetto:</b> ${esc(item.description || 'Oggetto utilizzabile durante la tua avventura.')}</p>`);
+      if (item && !card.querySelector('.itemEffect')) card.insertAdjacentHTML('beforeend', `<p class="itemEffect"><b>Effetto:</b> ${esc(item.effect || item.description || 'Oggetto utilizzabile durante la tua avventura.')}</p>`);
     });
   };
 
@@ -110,28 +74,28 @@
     const form = document.getElementById('preferencesForm');
     if (form && !document.getElementById('settingsVibration')) {
       form.querySelector('#settingsMotion')?.closest('label')?.insertAdjacentHTML('afterend', '<label class="checkField"><input id="settingsVibration" type="checkbox"> Vibrazione su smartphone</label>');
-      form.querySelector('#settingsEffects')?.insertAdjacentHTML('afterend', '<label class="checkField"><input id="settingsMusic" type="checkbox" checked> Musica</label>');
+      form.querySelector('#settingsEffects')?.closest('label')?.insertAdjacentHTML('afterend', '<label class="checkField"><input id="settingsMusic" type="checkbox" checked> Musica</label>');
       $('settingsVibration').checked = account.preferences?.vibration !== false;
-      $('settingsMusic').checked = (account.preferences?.musicVolume ?? battleMusic.volume) > 0;
+      $('settingsMusic').checked = account.preferences?.musicEnabled !== false;
     }
   };
   savePreferences = async function () {
     const vibration = $('settingsVibration')?.checked !== false;
     const music = $('settingsMusic')?.checked !== false;
-    const musicVolume = music ? +$('settingsVolume').value : 0;
+    const musicVolume = +$('settingsVolume').value;
     window.vibrationEnabled = vibration;
     return withSettingsForm('preferencesForm', 'preferencesStatus', async () => {
       const preferences = {
         language: $('accountLanguage').value,
         musicVolume,
+        musicEnabled: music,
         soundEffects: $('settingsEffects').checked,
         reducedMotion: $('settingsMotion').checked,
         vibration
       };
       saveAccount(await api('action', { action: 'preferences', preferences }));
       $('preferencesStatus').textContent = 'Preferenze salvate.';
-      if (!music) { battleMusic.pause(); battleMusic.muted = true; }
-      if (music) battleMusic.muted = false;
+      applyMusicPreference();
     });
   };
   window.vibrationEnabled = account?.preferences?.vibration !== false;
